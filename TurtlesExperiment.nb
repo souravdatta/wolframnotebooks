@@ -1,0 +1,839 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     31360,        831]
+NotebookOptionsPosition[     24839,        720]
+NotebookOutlinePosition[     25230,        736]
+CellTagsIndexPosition[     25187,        733]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+An experiment to build Turtle Geometry with basic lists and functions\
+\>", "Title",
+ CellChangeTimes->{{3.734515914186035*^9, 3.734515931826859*^9}, {
+  3.7345159623272285`*^9, 3.734515984280611*^9}, {3.734516285924711*^9, 
+  3.734516291221736*^9}, {3.734536055158394*^9, 
+  3.7345360578145947`*^9}},ExpressionUUID->"e53aefdc-db26-444d-8b2e-\
+55d515c3753b"],
+
+Cell[CellGroupData[{
+
+Cell["Constructor and selectors", "Section",
+ CellChangeTimes->{{3.734536293770547*^9, 3.7345362989424677`*^9}, 
+   3.734536368302718*^9, {3.734536404865563*^9, 
+   3.734536405740657*^9}},ExpressionUUID->"81c9ad1a-e0d8-4f24-85ff-\
+9850eed04e31"],
+
+Cell["\<\
+A turtle is defined simply as a list of three things - x and y coordinates \
+and an angle. A turtle is created by a constructor and it is accessed by some \
+selectors.\
+\>", "Text",
+ CellChangeTimes->{{3.7345160030308323`*^9, 
+  3.7345160797504883`*^9}},ExpressionUUID->"ff1eddd4-c0c8-44b6-94fb-\
+ae9dc405da1d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MakeTurtle", "[", 
+   RowBox[{"x_", ",", " ", "y_", ",", " ", "angle_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"{", 
+   RowBox[{"x", ",", " ", "y", ",", " ", "angle"}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.734516094578788*^9, 
+  3.7345161210165157`*^9}},ExpressionUUID->"b51d1167-8cbc-4d29-8155-\
+0a5cff14a827"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TurtleX", "[", 
+   RowBox[{"{", 
+    RowBox[{"x_", ",", " ", "y_", ",", " ", "angle_"}], "}"}], "]"}], " ", ":=",
+   " ", "x"}]], "Input",
+ CellChangeTimes->{{3.7345161283760624`*^9, 
+  3.734516143391883*^9}},ExpressionUUID->"dba42ccf-ea8f-4d51-9d98-\
+b3d285a34470"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TurtleY", "[", 
+   RowBox[{"{", 
+    RowBox[{"x_", ",", " ", "y_", ",", " ", "angle_"}], "}"}], "]"}], " ", ":=",
+   " ", "y"}]], "Input",
+ CellChangeTimes->{{3.7345161446886697`*^9, 
+  3.7345161561576405`*^9}},ExpressionUUID->"3eaea3aa-ed90-4281-afbd-\
+8368e16103ef"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TurtleAngle", "[", 
+   RowBox[{"{", 
+    RowBox[{"x_", ",", " ", "y_", ",", " ", "angle_"}], "}"}], "]"}], " ", ":=",
+   " ", "angle"}]], "Input",
+ CellChangeTimes->{{3.734516158126356*^9, 
+  3.734516173642208*^9}},ExpressionUUID->"a8abb9cc-7c6a-46cc-8ffb-\
+0e52722a9106"],
+
+Cell[BoxData["\[IndentingNewLine]"], "Input",
+ CellChangeTimes->{
+  3.7345363202865257`*^9},ExpressionUUID->"90e2b2a8-f32c-432e-825f-\
+66f37d97a33c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Tests of the constructor and selectors", "Section",
+ CellChangeTimes->{{3.734536351302459*^9, 
+  3.7345363625525928`*^9}},ExpressionUUID->"371f39ef-a715-4d43-931e-\
+1cc9f4f1f1b1"],
+
+Cell["\<\
+Most part of turtle graphics can be drawn by just lines, even the arcs. So we \
+need functions to get x, y out of a turtle and create a line.\
+\>", "Text",
+ CellChangeTimes->{{3.73451621440829*^9, 
+  3.7345162708621197`*^9}},ExpressionUUID->"4e889a77-0a87-4e8c-a046-\
+b1dd0be83095"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TurtleLineCoords", "[", "turtles_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"TurtleX", "[", "#", "]"}], ",", " ", 
+      RowBox[{"TurtleY", "[", "#", "]"}]}], "}"}], "&"}], " ", "/@", " ", 
+   "turtles"}]}]], "Input",
+ CellChangeTimes->{{3.7345163034874535`*^9, 3.7345163043312635`*^9}, {
+  3.7345163494822035`*^9, 3.7345163718730927`*^9}, {3.7345164649209795`*^9, 
+  3.7345165077965717`*^9}},ExpressionUUID->"d2a1dd01-993b-42bb-903f-\
+c9943aff215e"],
+
+Cell["Now lets test how these functions work.", "Text",
+ CellChangeTimes->{{3.7345165194060826`*^9, 
+  3.7345165363437834`*^9}},ExpressionUUID->"fc776fde-4b5f-4a9d-b70c-\
+ae668492a764"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"t1", " ", "=", " ", 
+  RowBox[{"MakeTurtle", "[", 
+   RowBox[{"10", ",", " ", "14", ",", " ", "30"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.734516636016767*^9, 
+  3.7345166479701004`*^9}},ExpressionUUID->"38cdd080-f463-497e-9faf-\
+f6b3793bf2c4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"10", ",", "14", ",", "30"}], "}"}]], "Output",
+ CellChangeTimes->{3.734516648391911*^9, 
+  3.734516753174381*^9},ExpressionUUID->"44a735c0-64e9-4b5a-a3ff-\
+8abf71fd1a14"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"t2", " ", "=", " ", 
+  RowBox[{"MakeTurtle", "[", 
+   RowBox[{"20", ",", " ", "10", ",", " ", "35"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.734516650579426*^9, 
+  3.734516661157756*^9}},ExpressionUUID->"b7260664-75e6-4990-b73e-\
+2be9793567d0"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"20", ",", "10", ",", "35"}], "}"}]], "Output",
+ CellChangeTimes->{3.734516661595193*^9, 
+  3.7345167550806694`*^9},ExpressionUUID->"89b6908a-a079-4ad0-89a1-\
+2dadf0f314cd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"TurtleX", "[", "t2", "]"}], ",", " ", 
+   RowBox[{"TurtleY", "[", "t2", "]"}], ",", " ", 
+   RowBox[{"TurtleAngle", "[", "t2", "]"}]}], "}"}]], "Input",
+ CellChangeTimes->{{3.734516669204726*^9, 
+  3.7345168122532043`*^9}},ExpressionUUID->"8876144c-7c61-41db-8f2a-\
+d19fe086d20a"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"20", ",", "10", ",", "35"}], "}"}]], "Output",
+ CellChangeTimes->{{3.734516687329858*^9, 3.7345167455024157`*^9}, 
+   3.7345167814090915`*^9, 
+   3.73451681265946*^9},ExpressionUUID->"dd04e2aa-3149-4751-ac74-\
+fabda5b4ef3b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"TurtleX", "[", "t1", "]"}], ",", " ", 
+   RowBox[{"TurtleY", "[", "t1", "]"}], ",", " ", 
+   RowBox[{"TurtleAngle", "[", "t1", "]"}]}], "}"}]], "Input",
+ CellChangeTimes->{{3.734516689908021*^9, 3.7345166899861355`*^9}, {
+  3.7345168182846117`*^9, 
+  3.7345168436130257`*^9}},ExpressionUUID->"0d04121c-0b0c-4daa-9fbc-\
+163405de9111"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"10", ",", "14", ",", "30"}], "}"}]], "Output",
+ CellChangeTimes->{{3.734516690548645*^9, 3.7345167180021076`*^9}, {
+  3.7345167995499325`*^9, 
+  3.7345168440817194`*^9}},ExpressionUUID->"05450647-5632-4571-988c-\
+2f74c0a8cfcd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TurtleLineCoords", "[", 
+  RowBox[{"{", 
+   RowBox[{"t1", ",", " ", "t2"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7345168736133175`*^9, 
+  3.7345168793790817`*^9}},ExpressionUUID->"ec2a066e-ea89-4d1e-9fc0-\
+2cddbe6abb93"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"10", ",", "14"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"20", ",", "10"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.7345168798477507`*^9},ExpressionUUID->"24d4d925-ebcf-4dfe-94d0-\
+7d7d129e7b19"]
+}, Open  ]],
+
+Cell["Now lets try to draw a line between t1 and t2.", "Text",
+ CellChangeTimes->{{3.7345168957699003`*^9, 
+  3.7345169092388096`*^9}},ExpressionUUID->"3b09e5d3-ea1a-410a-b406-\
+ebe77a00bc1e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Graphics", "[", 
+  RowBox[{"Line", "[", 
+   RowBox[{"TurtleLineCoords", "[", 
+    RowBox[{"{", 
+     RowBox[{"t1", ",", " ", "t2"}], "}"}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.73451691839511*^9, 
+  3.7345169444892273`*^9}},ExpressionUUID->"d9c7b430-a141-471c-bd88-\
+6fc7cc9fcda4"],
+
+Cell[BoxData[
+ GraphicsBox[LineBox[{{10, 14}, {20, 10}}]]], "Output",
+ CellChangeTimes->{
+  3.734516945364153*^9},ExpressionUUID->"4a98a8a4-b703-45f2-8e06-\
+6487c685ee72"]
+}, Open  ]],
+
+Cell[BoxData["\[IndentingNewLine]"], "Input",
+ CellChangeTimes->{{3.734515995171365*^9, 3.734515995218156*^9}, 
+   3.7345363778965797`*^9},ExpressionUUID->"c57e7bf3-e086-4464-b3b9-\
+362eda510c34"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Drawing primitives", "Section",
+ CellChangeTimes->{{3.734536388646711*^9, 
+  3.7345363978186903`*^9}},ExpressionUUID->"20c6f046-fd5c-4f61-b76e-\
+22c994851300"],
+
+Cell["\<\
+Now we shall define the transformation functions which will depend less on \
+the representation of turtle and use the above functions. First the forward \
+function.\
+\>", "Text",
+ CellChangeTimes->{{3.7345169992710667`*^9, 3.7345170146775537`*^9}, {
+  3.7345170832408648`*^9, 3.7345170906940756`*^9}, {3.7345172856494455`*^9, 
+  3.734517304790311*^9}},ExpressionUUID->"72b86951-1318-4a1a-a949-\
+2e12326197ae"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TurtleFwd", "[", 
+   RowBox[{"turtle_", ",", " ", "len_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"MakeTurtle", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"TurtleX", "[", "turtle", "]"}], " ", "+", " ", 
+     RowBox[{
+      RowBox[{"Sin", "[", 
+       RowBox[{
+        RowBox[{"TurtleAngle", "[", "turtle", "]"}], " ", "Degree"}], "]"}], 
+      " ", "*", " ", "len"}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"TurtleY", "[", "turtle", "]"}], " ", "+", " ", 
+     RowBox[{
+      RowBox[{"Cos", "[", 
+       RowBox[{
+        RowBox[{"TurtleAngle", "[", "turtle", "]"}], " ", "Degree"}], "]"}], 
+      " ", "*", " ", "len"}]}], ",", " ", 
+    RowBox[{"TurtleAngle", "[", "turtle", "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.734517439349799*^9, 3.734517484209705*^9}, {
+  3.7345175192882423`*^9, 3.7345176027423534`*^9}, {3.734519791257509*^9, 
+  3.734519799195016*^9}, {3.7345206749174986`*^9, 3.734520745918251*^9}, {
+  3.7345208410444593`*^9, 
+  3.7345208799042077`*^9}},ExpressionUUID->"c358fdb4-7a84-462c-a91b-\
+9fa59e95225d"],
+
+Cell["Lets test it now.", "Text",
+ CellChangeTimes->{{3.7345176595085917`*^9, 
+  3.734517666477481*^9}},ExpressionUUID->"b8db3322-aca7-4399-808b-\
+9a8a74df30a6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"tf", " ", "=", " ", 
+  RowBox[{"TurtleFwd", "[", 
+   RowBox[{
+    RowBox[{"MakeTurtle", "[", 
+     RowBox[{"0", ",", " ", "0", ",", " ", "0"}], "]"}], ",", " ", "10"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.734517676758852*^9, 3.734517716212408*^9}, {
+  3.7345178190105305`*^9, 
+  3.7345178206510897`*^9}},ExpressionUUID->"bfbc97bd-e63f-47d0-a023-\
+5d914957f0e6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "10", ",", "0"}], "}"}]], "Output",
+ CellChangeTimes->{{3.7345176996340513`*^9, 3.7345177171968145`*^9}, 
+   3.73451782116672*^9, 3.734519804070074*^9, 3.734519915118279*^9, {
+   3.7345206997145824`*^9, 3.734520728933674*^9}, {3.7345208622321215`*^9, 
+   3.734520882263608*^9}},ExpressionUUID->"db162ec1-25f5-4a64-9f45-\
+ededadf2f985"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Graphics", "[", 
+  RowBox[{"Line", "[", 
+   RowBox[{"TurtleLineCoords", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"MakeTurtle", "[", 
+       RowBox[{"0", ",", "0", ",", "0"}], "]"}], ",", " ", 
+      RowBox[{"TurtleFwd", "[", 
+       RowBox[{
+        RowBox[{"MakeTurtle", "[", 
+         RowBox[{"0", ",", "0", ",", "0"}], "]"}], ",", " ", "10"}], "]"}]}], 
+     "}"}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7345177384470787`*^9, 3.734517799557119*^9}, {
+  3.734519886930513*^9, 3.7345198933680916`*^9}, {3.734519965846628*^9, 
+  3.7345199669560175`*^9}, {3.7345206383076124`*^9, 
+  3.7345206498546925`*^9}},ExpressionUUID->"a894320a-fab8-46d7-83e5-\
+2b99947aaafa"],
+
+Cell[BoxData[
+ GraphicsBox[LineBox[{{0, 0}, {0, 10}}]]], "Output",
+ CellChangeTimes->{
+  3.7345178003383646`*^9, 3.7345198067576766`*^9, {3.7345198941023874`*^9, 
+   3.734519968346572*^9}, {3.7345206422451677`*^9, 3.734520650417123*^9}, {
+   3.7345207020583577`*^9, 3.7345207318243327`*^9}, {3.7345208679821897`*^9, 
+   3.7345208855136476`*^9}},ExpressionUUID->"c71ce20c-9c4c-490a-bffe-\
+6bbbc0e1b4f7"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.734517149804064*^9, 3.7345171526323075`*^9}, {
+  3.734517195351477*^9, 
+  3.7345172061797733`*^9}},ExpressionUUID->"e6384256-4103-40cd-9ca6-\
+e6c3cc1b9b72"],
+
+Cell["\<\
+Lets modify the forward function to make it a higher order function.\
+\>", "Text",
+ CellChangeTimes->{{3.7345239575542946`*^9, 
+  3.7345239774139204`*^9}},ExpressionUUID->"89efcd4c-e76b-4e4e-896b-\
+f810b0ac8e7b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TFwd", "[", "len_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"TurtleFwd", "[", 
+    RowBox[{"#", ",", " ", "len"}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.7345239861640224`*^9, 
+  3.7345240224143653`*^9}},ExpressionUUID->"c83f35a1-6d49-4c53-a113-\
+765fc535fe8c"],
+
+Cell["Now we will implement the other primitives.", "Text",
+ CellChangeTimes->{{3.734524038117761*^9, 
+  3.7345240506178255`*^9}},ExpressionUUID->"087bd1ef-540e-46e5-a117-\
+74400b0cf949"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TurtleRight", "[", 
+   RowBox[{"turtle_", ",", " ", "angle_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"MakeTurtle", "[", 
+   RowBox[{
+    RowBox[{"TurtleX", "[", "turtle", "]"}], ",", " ", 
+    RowBox[{"TurtleY", "[", "turtle", "]"}], ",", " ", 
+    RowBox[{
+     RowBox[{"TurtleAngle", "[", "turtle", "]"}], " ", "+", " ", "angle"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.734524055867915*^9, 3.734524122712511*^9}, 
+   3.734524163087943*^9},ExpressionUUID->"177804a7-de13-45f1-b57c-\
+8cc1d1debdbe"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TRight", "[", "angle_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"TurtleRight", "[", 
+    RowBox[{"#", ",", " ", "angle"}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.7345241278687797`*^9, 
+  3.7345241563690743`*^9}},ExpressionUUID->"f0e62f19-3ab1-4257-bded-\
+bf8a0a6fde5a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TurtleLeft", "[", 
+   RowBox[{"turtle_", ",", " ", "angle_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"MakeTurtle", "[", 
+   RowBox[{
+    RowBox[{"TurtleX", "[", "turtle", "]"}], ",", " ", 
+    RowBox[{"TurtleY", "[", "turtle", "]"}], ",", " ", 
+    RowBox[{
+     RowBox[{"TurtleAngle", "[", "turtle", "]"}], " ", "-", " ", "angle"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.734517823901128*^9, 3.7345178239793243`*^9}, 
+   3.7345208943732133`*^9, {3.7345241727756004`*^9, 
+   3.7345241817288322`*^9}},ExpressionUUID->"7423bab1-4f67-4612-82c8-\
+5e610f93115b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"TLeft", "[", "angle_", "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"TurtleLeft", "[", 
+     RowBox[{"#", ",", " ", "angle"}], "]"}], "&"}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.7345241942133546`*^9, 3.7345242011352262`*^9}, {
+  3.7345364204595413`*^9, 
+  3.7345364210533385`*^9}},ExpressionUUID->"e950152c-ffee-4448-b840-\
+864f367477fd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The sequencer (a.k.a. the fold)", "Section",
+ CellChangeTimes->{{3.7345364396629333`*^9, 
+  3.734536452741213*^9}},ExpressionUUID->"0b609411-8dc0-4e85-a1bc-\
+025092300326"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TSeq", "[", "turtleFns_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"Fold", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"trtlist", ",", " ", "tf"}], "}"}], ",", " ", 
+       RowBox[{"Append", "[", 
+        RowBox[{"trtlist", ",", " ", 
+         RowBox[{"tf", "[", 
+          RowBox[{"Last", "[", "trtlist", "]"}], "]"}]}], "]"}]}], "]"}], ",",
+      " ", "#", ",", " ", "turtleFns"}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.7345244618258023`*^9, 3.7345244626539645`*^9}, {
+   3.7345250430357866`*^9, 3.734525055786024*^9}, {3.734525088926982*^9, 
+   3.734525106208412*^9}, {3.73452517749113*^9, 3.734525248788847*^9}, {
+   3.7345253053363886`*^9, 3.734525315305256*^9}, {3.734529234432968*^9, 
+   3.7345292663709254`*^9}, 3.7345293137464*^9, {3.734530214210237*^9, 
+   3.7345302578982544`*^9}, {3.7345302883516536`*^9, 3.734530295789325*^9}, {
+   3.7345312404773283`*^9, 3.734531253805663*^9}, {3.734531441354866*^9, 
+   3.7345314839179273`*^9}, {3.734531614122587*^9, 3.7345316171225376`*^9}, {
+   3.7345323913184676`*^9, 3.7345323977787*^9}, {3.7345324578106585`*^9, 
+   3.734532495545495*^9}},ExpressionUUID->"db4e6ee8-2240-4d00-b07d-\
+6120d1c5b380"],
+
+Cell["\<\
+With the above sequencer and the higher order functions a list of primitive \
+modifiers can be successively applied to form turtles all the way to the last \
+step. \
+\>", "Text",
+ CellChangeTimes->{{3.7345253356336193`*^9, 3.734525391681072*^9}, {
+  3.7345255297296605`*^9, 3.7345255528704796`*^9}, {3.7345364645226035`*^9, 
+  3.734536543320408*^9}},ExpressionUUID->"95463e13-fc73-4632-8e4a-\
+d4754820906c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"TSeq", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"TFwd", "[", "10", "]"}], ",", 
+     RowBox[{"TRight", "[", "45", "]"}], ",", " ", 
+     RowBox[{"TFwd", "[", "20", "]"}]}], "}"}], "]"}], "[", 
+  RowBox[{"{", 
+   RowBox[{"MakeTurtle", "[", 
+    RowBox[{"0", ",", "0", ",", "0"}], "]"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7345254125251536`*^9, 3.734525426634655*^9}, {
+  3.7345255131512814`*^9, 3.734525520698306*^9}, {3.734525562589424*^9, 
+  3.734525594699131*^9}, {3.734529325715294*^9, 3.734529331762266*^9}, {
+  3.734529562593135*^9, 3.734529564108758*^9}, {3.7345316267633057`*^9, 
+  3.7345316287790117`*^9}, {3.7345316779045887`*^9, 3.7345316820608883`*^9}, {
+  3.7345317227644386`*^9, 3.7345317509835777`*^9}, {3.7345317918121843`*^9, 
+  3.734531815843718*^9}, {3.734532407810069*^9, 3.7345324439667454`*^9}, {
+  3.7345325365147285`*^9, 3.7345325406085267`*^9}, {3.7345325738901687`*^9, 
+  3.734532579937115*^9}},ExpressionUUID->"81dfdf66-28a5-4631-b6b3-\
+f8cbc71a7988"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "10", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "10", ",", "45"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"10", " ", 
+      SqrtBox["2"]}], ",", 
+     RowBox[{"10", "+", 
+      RowBox[{"10", " ", 
+       SqrtBox["2"]}]}], ",", "45"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.734525427072131*^9, 3.734525521182604*^9, 3.734525563245596*^9, 
+   3.7345255954178505`*^9, 3.734529333090376*^9, 3.7345295691556797`*^9, {
+   3.7345302449761553`*^9, 3.7345302683357897`*^9}, 3.734531263165078*^9, {
+   3.7345314627301054`*^9, 3.7345314897616763`*^9}, {3.73453162963831*^9, 
+   3.734531636388405*^9}, 3.73453168463896*^9, {3.734531735827081*^9, 
+   3.7345317518741426`*^9}, 3.734531817328025*^9, {3.7345324308415184`*^9, 
+   3.734532446060465*^9}, 3.734532499779849*^9, 3.7345325415615745`*^9, 
+   3.7345325805620384`*^9},ExpressionUUID->"8fa2c4f8-19bc-4912-8089-\
+a258ca0e7774"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TurtleLineCoords", "[", "%", "]"}]], "Input",
+ CellChangeTimes->{{3.734529597874838*^9, 3.734529605843681*^9}, {
+   3.734530184022382*^9, 3.7345301853191876`*^9}, 3.7345313152908783`*^9, {
+   3.734531897110277*^9, 3.7345319191417427`*^9}, {3.7345325134050817`*^9, 
+   3.7345325576555176`*^9}},ExpressionUUID->"0c386e5b-db28-4882-92e0-\
+a2a742d2c0ca"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"10", " ", 
+      SqrtBox["2"]}], ",", 
+     RowBox[{"10", "+", 
+      RowBox[{"10", " ", 
+       SqrtBox["2"]}]}]}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.734529606374852*^9, 3.734530186194195*^9, 3.7345313163533773`*^9, 
+   3.7345319200948753`*^9, 3.734532518123802*^9, {3.734532558046161*^9, 
+   3.734532582983939*^9}},ExpressionUUID->"1d227f78-18d3-4df7-9118-\
+02a5b8ce4f8d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Line", "[", "%", "]"}]], "Input",
+ CellChangeTimes->{{3.734531325275427*^9, 3.73453133393178*^9}, {
+  3.734531934626296*^9, 3.7345319657048607`*^9}, {3.7345320125960393`*^9, 
+  3.7345320209398327`*^9}, {3.7345320622996674`*^9, 3.7345321586914587`*^9}, {
+  3.73453258790596*^9, 
+  3.7345325901247354`*^9}},ExpressionUUID->"862e7d0b-0fdd-49f5-aa71-\
+63837f9b456c"],
+
+Cell[BoxData[
+ RowBox[{"Line", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"0", ",", "0"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "10"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "10"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"10", " ", 
+       SqrtBox["2"]}], ",", 
+      RowBox[{"10", "+", 
+       RowBox[{"10", " ", 
+        SqrtBox["2"]}]}]}], "}"}]}], "}"}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.7345313346192183`*^9, {3.7345319391419783`*^9, 3.7345319545015354`*^9}, {
+   3.7345320156585064`*^9, 3.7345320215023117`*^9}, 3.7345321182690787`*^9, 
+   3.7345321591914344`*^9, 
+   3.734532590546545*^9},ExpressionUUID->"148a7fba-7b4b-408f-8aa2-\
+ef23d82c8f95"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Graphics", "[", "%", "]"}]], "Input",
+ CellChangeTimes->{{3.7345320379244657`*^9, 3.734532038346259*^9}, {
+  3.734532594843541*^9, 
+  3.7345325979842033`*^9}},ExpressionUUID->"b0239d8d-c8b4-41b4-ba5c-\
+796098e6c232"],
+
+Cell[BoxData[
+ GraphicsBox[
+  LineBox[NCache[{{0, 0}, {0, 10}, {0, 10}, {
+     10 2^Rational[1, 2], 10 + 10 2^Rational[1, 2]}}, {{0, 0}, {0, 10}, {0, 
+     10}, {14.142135623730951`, 24.14213562373095}}]]]], "Output",
+ CellChangeTimes->{3.734532038783763*^9, 
+  3.7345325983591194`*^9},ExpressionUUID->"b9d60b9c-7d65-44aa-90e8-\
+fe82e3daeaf1"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.7345320402994356`*^9, 3.734532042455767*^9}, {
+  3.7345326094687157`*^9, 
+  3.734532610828061*^9}},ExpressionUUID->"f428fe4e-e6ef-4fe6-a8ae-\
+ec29d6cd16cc"],
+
+Cell["\<\
+Finally, we need a convenience function to begin drawing on a list of \
+primitives like TFwd and TRight.\
+\>", "Text",
+ CellChangeTimes->{{3.734532634437702*^9, 
+  3.7345326620162096`*^9}},ExpressionUUID->"b84a2977-ce5c-4d84-b9a1-\
+10bea3798b58"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.7345326674381475`*^9, 
+  3.734532667453705*^9}},ExpressionUUID->"5784aa47-3550-45f8-a01a-\
+10b4c5643778"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Turtle", "Section",
+ CellChangeTimes->{{3.734536556804941*^9, 
+  3.7345365576798677`*^9}},ExpressionUUID->"d341d3ab-b9ab-4a38-98af-\
+ea09cc44ae31"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Turtle", "[", "stepslist_", "]"}], " ", ":=", " ", 
+  RowBox[{"Graphics", "[", 
+   RowBox[{"Line", "[", 
+    RowBox[{"TurtleLineCoords", "[", 
+     RowBox[{
+      RowBox[{"TSeq", "[", "stepslist", "]"}], "[", 
+      RowBox[{"{", 
+       RowBox[{"MakeTurtle", "[", 
+        RowBox[{"0", ",", "0", ",", "0"}], "]"}], "}"}], "]"}], "]"}], "]"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.734535638075333*^9, 
+  3.7345357846552033`*^9}},ExpressionUUID->"df1c8047-1ab9-460e-ba80-\
+dd857d0d701d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Turtle", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"TFwd", "[", "5", "]"}], ",", 
+    RowBox[{"TLeft", "[", "45", "]"}], ",", 
+    RowBox[{"TFwd", "[", "5", "]"}], ",", " ", 
+    RowBox[{"TRight", "[", "135", "]"}], ",", " ", 
+    RowBox[{"TFwd", "[", "15", "]"}], ",", " ", 
+    RowBox[{"TRight", "[", "135", "]"}], ",", " ", 
+    RowBox[{"TFwd", "[", "5", "]"}], ",", " ", 
+    RowBox[{"TLeft", "[", "45", "]"}], ",", " ", 
+    RowBox[{"TFwd", "[", "5", "]"}], ",", " ", 
+    RowBox[{"TRight", "[", "90", "]"}], ",", " ", 
+    RowBox[{"TFwd", "[", "8", "]"}]}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7345357886083326`*^9, 3.73453581020238*^9}, {
+  3.734535896609565*^9, 
+  3.734536009704735*^9}},ExpressionUUID->"f50f8df5-abc8-4e05-9a14-\
+1e57926c2cd8"],
+
+Cell[BoxData[
+ GraphicsBox[
+  LineBox[NCache[{{0, 0}, {0, 5}, {0, 
+     5}, {(-5) 2^Rational[-1, 2], 5 + 5 2^Rational[-1, 2]}, {(-5) 
+      2^Rational[-1, 2], 5 + 5 2^Rational[-1, 2]}, {
+     15 - 5 2^Rational[-1, 2], 5 + 5 2^Rational[-1, 2]}, {
+     15 - 5 2^Rational[-1, 2], 5 + 5 2^Rational[-1, 2]}, {
+     15 - 5 2^Rational[1, 2], 5}, {15 - 5 2^Rational[1, 2], 5}, {
+     15 - 5 2^Rational[1, 2], 0}, {15 - 5 2^Rational[1, 2], 0}, {
+     7 - 5 2^Rational[1, 2], 0}}, {{0, 0}, {0, 5}, {0, 
+     5}, {-3.5355339059327373`, 8.535533905932738}, {-3.5355339059327373`, 
+     8.535533905932738}, {11.464466094067262`, 8.535533905932738}, {
+     11.464466094067262`, 8.535533905932738}, {7.9289321881345245`, 5}, {
+     7.9289321881345245`, 5}, {7.9289321881345245`, 0}, {
+     7.9289321881345245`, 0}, {-0.0710678118654755, 0}}]]]], "Output",
+ CellChangeTimes->{
+  3.7345358107647996`*^9, {3.7345359167504416`*^9, 
+   3.734536010173405*^9}},ExpressionUUID->"ea73ef64-16c0-4943-a020-\
+8c36286a1b5b"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1366, 685},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+PrintingPageRange->{Automatic, Automatic},
+FrontEndVersion->"11.2 for Microsoft Windows (64-bit) (September 10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 368, 7, 96, "Title",ExpressionUUID->"e53aefdc-db26-444d-8b2e-55d515c3753b"],
+Cell[CellGroupData[{
+Cell[973, 33, 245, 4, 67, "Section",ExpressionUUID->"81c9ad1a-e0d8-4f24-85ff-9850eed04e31"],
+Cell[1221, 39, 321, 7, 34, "Text",ExpressionUUID->"ff1eddd4-c0c8-44b6-94fb-ae9dc405da1d"],
+Cell[1545, 48, 347, 8, 28, "Input",ExpressionUUID->"b51d1167-8cbc-4d29-8155-0a5cff14a827"],
+Cell[1895, 58, 301, 8, 28, "Input",ExpressionUUID->"dba42ccf-ea8f-4d51-9d98-b3d285a34470"],
+Cell[2199, 68, 303, 8, 28, "Input",ExpressionUUID->"3eaea3aa-ed90-4281-afbd-8368e16103ef"],
+Cell[2505, 78, 307, 8, 28, "Input",ExpressionUUID->"a8abb9cc-7c6a-46cc-8ffb-0e52722a9106"],
+Cell[2815, 88, 149, 3, 48, "Input",ExpressionUUID->"90e2b2a8-f32c-432e-825f-66f37d97a33c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3001, 96, 185, 3, 67, "Section",ExpressionUUID->"371f39ef-a715-4d43-931e-1cc9f4f1f1b1"],
+Cell[3189, 101, 292, 6, 34, "Text",ExpressionUUID->"4e889a77-0a87-4e8c-a046-b1dd0be83095"],
+Cell[3484, 109, 538, 13, 28, "Input",ExpressionUUID->"d2a1dd01-993b-42bb-903f-c9943aff215e"],
+Cell[4025, 124, 185, 3, 34, "Text",ExpressionUUID->"fc776fde-4b5f-4a9d-b70c-ae668492a764"],
+Cell[CellGroupData[{
+Cell[4235, 131, 272, 6, 28, "Input",ExpressionUUID->"38cdd080-f463-497e-9faf-f6b3793bf2c4"],
+Cell[4510, 139, 210, 5, 32, "Output",ExpressionUUID->"44a735c0-64e9-4b5a-a3ff-8abf71fd1a14"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4757, 149, 270, 6, 28, "Input",ExpressionUUID->"b7260664-75e6-4990-b73e-2be9793567d0"],
+Cell[5030, 157, 212, 5, 32, "Output",ExpressionUUID->"89b6908a-a079-4ad0-89a1-2dadf0f314cd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5279, 167, 332, 8, 28, "Input",ExpressionUUID->"8876144c-7c61-41db-8f2a-d19fe086d20a"],
+Cell[5614, 177, 264, 6, 32, "Output",ExpressionUUID->"dd04e2aa-3149-4751-ac74-fabda5b4ef3b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5915, 188, 385, 9, 28, "Input",ExpressionUUID->"0d04121c-0b0c-4daa-9fbc-163405de9111"],
+Cell[6303, 199, 267, 6, 32, "Output",ExpressionUUID->"05450647-5632-4571-988c-2f74c0a8cfcd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6607, 210, 253, 6, 28, "Input",ExpressionUUID->"ec2a066e-ea89-4d1e-9fc0-2cddbe6abb93"],
+Cell[6863, 218, 279, 9, 32, "Output",ExpressionUUID->"24d4d925-ebcf-4dfe-94d0-7d7d129e7b19"]
+}, Open  ]],
+Cell[7157, 230, 192, 3, 34, "Text",ExpressionUUID->"3b09e5d3-ea1a-410a-b406-ebe77a00bc1e"],
+Cell[CellGroupData[{
+Cell[7374, 237, 321, 8, 28, "Input",ExpressionUUID->"d9c7b430-a141-471c-bd88-6fc7cc9fcda4"],
+Cell[7698, 247, 171, 4, 170, "Output",ExpressionUUID->"4a98a8a4-b703-45f2-8e06-6487c685ee72"]
+}, Open  ]],
+Cell[7884, 254, 196, 3, 48, "Input",ExpressionUUID->"c57e7bf3-e086-4464-b3b9-362eda510c34"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8117, 262, 165, 3, 67, "Section",ExpressionUUID->"20c6f046-fd5c-4f61-b76e-22c994851300"],
+Cell[8285, 267, 419, 8, 34, "Text",ExpressionUUID->"72b86951-1318-4a1a-a949-2e12326197ae"],
+Cell[8707, 277, 1065, 26, 28, "Input",ExpressionUUID->"c358fdb4-7a84-462c-a91b-9fa59e95225d"],
+Cell[9775, 305, 161, 3, 34, "Text",ExpressionUUID->"b8db3322-aca7-4399-808b-9a8a74df30a6"],
+Cell[CellGroupData[{
+Cell[9961, 312, 394, 10, 28, "Input",ExpressionUUID->"bfbc97bd-e63f-47d0-a023-5d914957f0e6"],
+Cell[10358, 324, 384, 7, 32, "Output",ExpressionUUID->"db162ec1-25f5-4a64-9f45-ededadf2f985"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10779, 336, 714, 17, 28, "Input",ExpressionUUID->"a894320a-fab8-46d7-83e5-2b99947aaafa"],
+Cell[11496, 355, 402, 7, 449, "Output",ExpressionUUID->"c71ce20c-9c4c-490a-bffe-6bbbc0e1b4f7"]
+}, Open  ]],
+Cell[11913, 365, 205, 4, 28, "Input",ExpressionUUID->"e6384256-4103-40cd-9ca6-e6c3cc1b9b72"],
+Cell[12121, 371, 222, 5, 34, "Text",ExpressionUUID->"89efcd4c-e76b-4e4e-896b-f810b0ac8e7b"],
+Cell[12346, 378, 311, 8, 28, "Input",ExpressionUUID->"c83f35a1-6d49-4c53-a113-765fc535fe8c"],
+Cell[12660, 388, 187, 3, 34, "Text",ExpressionUUID->"087bd1ef-540e-46e5-a117-74400b0cf949"],
+Cell[12850, 393, 539, 13, 28, "Input",ExpressionUUID->"177804a7-de13-45f1-b57c-8cc1d1debdbe"],
+Cell[13392, 408, 319, 8, 28, "Input",ExpressionUUID->"f0e62f19-3ab1-4257-bded-bf8a0a6fde5a"],
+Cell[13714, 418, 596, 14, 28, "Input",ExpressionUUID->"7423bab1-4f67-4612-82c8-5e610f93115b"],
+Cell[14313, 434, 436, 11, 67, "Input",ExpressionUUID->"e950152c-ffee-4448-b840-864f367477fd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14786, 450, 178, 3, 67, "Section",ExpressionUUID->"0b609411-8dc0-4e85-a1bc-025092300326"],
+Cell[14967, 455, 1259, 25, 28, "Input",ExpressionUUID->"db4e6ee8-2240-4d00-b07d-6120d1c5b380"],
+Cell[16229, 482, 417, 8, 34, "Text",ExpressionUUID->"95463e13-fc73-4632-8e4a-d4754820906c"],
+Cell[CellGroupData[{
+Cell[16671, 494, 1031, 20, 28, "Input",ExpressionUUID->"81dfdf66-28a5-4631-b6b3-f8cbc71a7988"],
+Cell[17705, 516, 1068, 25, 43, "Output",ExpressionUUID->"8fa2c4f8-19bc-4912-8089-a258ca0e7774"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18810, 546, 374, 6, 28, "Input",ExpressionUUID->"0c386e5b-db28-4882-92e0-a2a742d2c0ca"],
+Cell[19187, 554, 654, 20, 43, "Output",ExpressionUUID->"1d227f78-18d3-4df7-9118-02a5b8ce4f8d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19878, 579, 386, 7, 28, "Input",ExpressionUUID->"862e7d0b-0fdd-49f5-aa71-63837f9b456c"],
+Cell[20267, 588, 737, 22, 43, "Output",ExpressionUUID->"148a7fba-7b4b-408f-8aa2-ef23d82c8f95"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21041, 615, 240, 5, 28, "Input",ExpressionUUID->"b0239d8d-c8b4-41b4-ba5c-796098e6c232"],
+Cell[21284, 622, 343, 7, 449, "Output",ExpressionUUID->"b9d60b9c-7d65-44aa-90e8-fe82e3daeaf1"]
+}, Open  ]],
+Cell[21642, 632, 205, 4, 28, "Input",ExpressionUUID->"f428fe4e-e6ef-4fe6-a8ae-ec29d6cd16cc"],
+Cell[21850, 638, 256, 6, 34, "Text",ExpressionUUID->"b84a2977-ce5c-4d84-b9a1-10bea3798b58"],
+Cell[22109, 646, 154, 3, 28, InheritFromParent,ExpressionUUID->"5784aa47-3550-45f8-a01a-10b4c5643778"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22300, 654, 153, 3, 67, "Section",ExpressionUUID->"d341d3ab-b9ab-4a38-98af-ea09cc44ae31"],
+Cell[22456, 659, 528, 14, 28, "Input",ExpressionUUID->"df1c8047-1ab9-460e-ba80-dd857d0d701d"],
+Cell[CellGroupData[{
+Cell[23009, 677, 791, 18, 28, "Input",ExpressionUUID->"f50f8df5-abc8-4e05-9a14-1e57926c2cd8"],
+Cell[23803, 697, 996, 18, 228, "Output",ExpressionUUID->"ea73ef64-16c0-4943-a020-8c36286a1b5b"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
